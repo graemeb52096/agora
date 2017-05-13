@@ -1,0 +1,23 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "Node.js api for agora platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/graemeb52096/agora.git"
+  },
+  "keywords": [
+    "culture",
+    "art"
+  ],
+  "author": "Graeme Bates & David Ansermino",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/graemeb52096/agora/issues"
+  },
+  "homepage": "https://github.com/graemeb52096/agora#readme"
+}
