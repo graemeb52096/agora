@@ -1,16 +1,27 @@
 # Agora Api
 ## FILE STRUCTURE
 agora/
+
   package.json
+
   README.md
+
   src/
+
     index.js
+
     app/
+
       routes/
+
       models/
+
     lib/
+
       ** Stores helper files such as logger **
+
     config/
+
       ** Stores config files **
 
 ### Stage 1(Basic resources):
