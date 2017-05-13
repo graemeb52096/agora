@@ -1,5 +1,17 @@
 # Agora Api
-## Node.js with express
+## FILE STRUCTURE
+agora/
+  package.json
+  README.md
+  src/
+    index.js
+    app/
+      routes/
+      models/
+    lib/
+      ** Stores helper files such as logger **
+    config/
+      ** Stores config files **
 
 ### Stage 1(Basic resources):
 -Create routes to handle resource retrievals(i.e. files/posts/comments etc...)
