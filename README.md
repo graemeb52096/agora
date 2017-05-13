@@ -23,8 +23,18 @@
 ### Stage 4(Flare):
 -Create sale system(i.e. attach a sale platform to posts)
 
+  -Provide payment processing
+
+  -Provide shipping details
+  
+  -Provide verification(so no one gets ripped off)
+
 -Create additional profile types(Band, Store etc...)
 
 
 ### Stage 5(FIRE):
 -Create permission system for managing sub profiles
+
+-Create simple messaging platform(Possibly encrypted for fun?)
+
+-
