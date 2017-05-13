@@ -14,7 +14,7 @@
 ### Stage 3(Core functionality):
 -Create connection(allow following)
 
--Create like and tag system for posts
+-Create "like" and tag system for posts
 
 -Create basic feed algorithms
 
