@@ -36,5 +36,3 @@
 -Create permission system for managing sub profiles
 
 -Create simple messaging platform(Possibly encrypted for fun?)
-
--
