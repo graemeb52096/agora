@@ -5,7 +5,7 @@ var postSchema = new Schema({
   dateCreated: { type: Date, default: Date.now },
   user: String,
   mediaType: String,
-  mediaId: Number,
+  mediaUrl: String,
   title: String,
   description: String,
   comments: [{
