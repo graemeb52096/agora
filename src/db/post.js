@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/agora');
 var Schema = mongoose.Schema;
 
 var postSchema = new Schema({
@@ -15,7 +16,11 @@ var postSchema = new Schema({
   }],
   tags: [ String ],
   meta: {
-    shares: number,
-    upVotes: number
+    shares: Number,
+    upVotes: Number
   }
 });
+
+var Post = mongoose.model('Post', postSchema);
+
+module.exports = Post;

@@ -6,5 +6,14 @@ var writingSchema = new Schema({
 	user: String,
 	title: String,
 	description: String,
-	body: String
+	body: String,
+	meta: {
+		index: true
+	}
 });
+
+writingSchema.set('autoIndex', false);
+
+module.exports = {
+	writingSchema: writingSchema
+}
