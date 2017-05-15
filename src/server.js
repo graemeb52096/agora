@@ -42,7 +42,7 @@ passport.use(new LocalStrategy(
       };
       return done(null, user);
     });
-  }
+  };
 ));
 
 passport.serializeUser(function(user, done) {
@@ -68,8 +68,8 @@ function isAuthenticated() {
 function isOwner() {
   return function(req, res, item, next){
     //pass
-  }
-}
+  };
+};
 
 /** Add resources to app **/
 app.use(bodyParser.urlencoded({ extended: false }));

@@ -21,7 +21,7 @@ module.exports = function(router, isAuthenticated){
 		} else {
 			res.sendStatus(400);
 			return;
-		}
+		};
 		var post = new Post(req.body);
 		post.save(function(err){
 			if (err){

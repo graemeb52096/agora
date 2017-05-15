@@ -25,37 +25,31 @@ module.exports = function(router, isAuthenticated){
 		User.findOne({'_id': req.uid}, function(err, usr){
 			if(err){
 				res.json(err);
-			}
-			else if(!usr){
+			} else if(!usr){
 				res.sendStatus(404);
-			}
-			else{
+			} else {
 				res.json(usr);
-			}
-		})
+			};
+		});
 	})
 	.put(isAuthenticated(), function(req, res){
 		User.findByIdAndUpdate(req.uid, req.body, function(err, usr){
 			if(err){
 				res.json(err);
-			}
-			else if(!usr){
+			} else if(!usr){
 				res.sendStatus(404);
-			}
-			else{
+			} else{
 				res.json(usr);
-			}
-		})
+			};
+		});
 	})
 	.delete(isAuthenticated(), function(req, res){
 		User.findByIdAndRemove(req.uid, function(err, usr){
 			if(err){
 				res.json(err);
-			}
-			else if(!usr){
+			} else if(!usr){
 				res.sendStatus(404);
-			}
-			else{
+			} else{
 				res.sendStatus(200);
 			};
 		});
