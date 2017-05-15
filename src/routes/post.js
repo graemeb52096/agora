@@ -1,4 +1,5 @@
 var Post = require('../db/post');
+var Upload = require('../lib/file-upload');
 
 module.exports = function(router, isAuthenticated){
 	router.route('/post')
@@ -12,17 +13,9 @@ module.exports = function(router, isAuthenticated){
 	})
 	.post(isAuthenticated(), function(req, res){
 		var media = req.files;
-		if (media.type == 'image/jpg'){
-			//hanlde image upload
-		} else if (media.type == 'audio/mp3'){
-			//handle audio upload
-		} else if (media.type == 'video/mp4'){
-			//handle video upload
-		} else {
-			res.sendStatus(400);
-			return;
-		};
+		var resourcePath = Upload(req, res, media);
 		var post = new Post(req.body);
+		post.mediaUrl = resourcePath;
 		post.save(function(err){
 			if (err){
 				res.json(err);
