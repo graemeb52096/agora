@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/agora');
 var Schema = mongoose.Schema;
 
 var postSchema = new Schema({

@@ -7,13 +7,8 @@ var writingSchema = new Schema({
 	title: String,
 	description: String,
 	body: String,
-	meta: {
-		index: true
-	}
 });
 
-writingSchema.set('autoIndex', false);
+var Writing = mongoose.model('WritingWork', writingSchema);
 
-module.exports = {
-	writingSchema: writingSchema
-}
+module.exports = Writing;
