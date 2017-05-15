@@ -8,7 +8,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var app = express();
 var router = express.Router();
 
-
+/** Mongoose configs/initializer **/
 mongoose.connect(config.MONGODB);
 mongoose.connection.on('connected', function() {
     console.log('Mongoose connected to ' + config.MONGODB);
@@ -20,6 +20,8 @@ mongoose.connection.on('disconnected', function() {
     console.log('Mongoose disconnected.');
 });
 
+/** This function will capture all requests
+and could be useful for analytics **/
 router.use(function(req, res, next){
     console.log('Request was made.');
     next();
@@ -62,13 +64,14 @@ function isAuthenticated() {
     };
   };
 };
-//Checks if user is owner or resource
+//Checks if user is owner of resource
 function isOwner() {
   return function(req, res, item, next){
     //pass
   }
 }
 
+/** Add resources to app **/
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
@@ -78,8 +81,10 @@ app.use(passport.session());
 require('./routes/user')(router, isAuthenticated);
 require('./routes/post')(router, isAuthenticated);
 require('./routes/writing')(router, isAuthenticated);
-/** Add routes from router to app *//
+
+/** Add routes from router to app **/
 app.use('/api', router);
+/** Spin app **/
 app.listen(config.PORT, function () {
     console.log('Agora listening on port 3000!');
 });
