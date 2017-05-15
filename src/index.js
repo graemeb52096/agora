@@ -1,6 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var config = require('./config');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
@@ -11,7 +12,17 @@ var User = require('./db/user');
 var Post = require('./db/post');
 var Writing = require('./db/writing');
 
-mongoose.connect('mongodb://localhost:27017/agora');
+mongoose.connect(config.MONGODB);
+
+mongoose.connection.on('connected', function() {
+    console.log('Mongoose connected to ' + config.MONGODB);
+});
+mongoose.connection.on('error', function(error) {
+    console.log('Mongoose connection error: ' + error);
+});
+mongoose.connection.on('disconnected', function() {
+    console.log('Mongoose disconnected.');
+});
 
 router.use(function(req, res, next){
     console.log('Request was made.');
@@ -56,11 +67,12 @@ function isAuthenticated() {
 };
 
 function isOwner() {
-  return function(req, res, item, next()){
+  return function(req, res, item, next){
 
   }
 }
 
+/** URL PARAM HANDLERS **/
 app.param('post_id', function(req, res, next, post_id) {
     req.post_id = post_id;
     next();
@@ -171,6 +183,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/api', router);
 
-app.listen(3000, function () {
+app.listen(config.PORT, function () {
     console.log('Agora listening on port 3000!');
 });
