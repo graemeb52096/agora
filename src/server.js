@@ -8,8 +8,8 @@ var LocalStrategy = require('passport-local').Strategy;
 var app = express();
 var router = express.Router();
 
-mongoose.connect(config.MONGODB);
 
+mongoose.connect(config.MONGODB);
 mongoose.connection.on('connected', function() {
     console.log('Mongoose connected to ' + config.MONGODB);
 });
