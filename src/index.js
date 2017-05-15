@@ -43,6 +43,8 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
+/** MIDDLEWARE **/
+
 function isAuthenticated() {
   return function(req, res, next) {
     if (req.user) {
@@ -59,6 +61,12 @@ function isOwner() {
   }
 }
 
+app.param('post_id', function(req, res, next, post_id) {
+    req.post_id = post_id;
+    next();
+});
+
+/** ENDPOINTS **/
 router.route('/login')
   .post(passport.authenticate('local'), function(req, res){
     res.sendStatus(200);
@@ -95,6 +103,7 @@ router.route('/post')
       //handle video upload
     } else {
       res.sendStatus(400);
+      return;
     }
     var post = new Post(req.body);
     post.save(function(err){
