@@ -51,6 +51,7 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
+  //TODO: Perform actual lookup of user
   done(null, user);
 });
 
@@ -96,6 +97,47 @@ router.route('/user')
     })
   });
 
+router.route('/user/:uid')
+  .get(function(req, res){
+    User.findOne({'_id': req.uid}, function(err, usr){
+      if(err){
+        res.json(err);
+      }
+      else if(!usr){
+        res.sendStatus(404);
+      }
+      else{
+        res.json(usr);
+      }
+    })
+  })
+  .put(isAuthenticated, function(req, res){
+    User.findByIdAndUpdate(req.uid, req.body, function(err, usr){
+      if(err){
+        res.json(err);
+      }
+      else if(!usr){
+        res.sendStatus(404);
+      }
+      else{
+        res.json(usr);
+      }
+    })
+  })
+  .delete(isAuthenticated, function(req, res){
+    User.findByIdAndRemove(req.uid, function(err, usr){
+      if(err){
+        res.json(err);
+      }
+      else if(!usr){
+        res.sendStatus(404);
+      }
+      else{
+        res.sendStatus(200);
+      }
+    })
+  })
+
 router.route('/post')
   .get(function(req, res){
     Post.find(function(err, post){
@@ -105,7 +147,7 @@ router.route('/post')
       res.json(post);
     });
   })
-  .post(isAuthenticated(), function(req, res){
+  .post(isAuthenticated, function(req, res){
     var media = req.files;
     if (media.type == 'image/jpg'){
       //hanlde image upload
@@ -135,7 +177,7 @@ router.route('/post/:post_id')
       res.json(post);
     });
   })
-  .put(isAuthenticated(), function(req, res){
+  .put(isAuthenticated, function(req, res){
     Post.findByid(req.params.post_id, function(err, post){
       if (err){
         res.json(err);
@@ -149,7 +191,7 @@ router.route('/post/:post_id')
       });
     });
   })
-  .delete(isAuthenticated(), function(req, res){
+  .delete(isAuthenticated, function(req, res){
     Post.remove({ _id: req.params.post_id }, function(err, post){
       if (err){
         res.json(err);
@@ -167,7 +209,7 @@ router.route('/writing')
       res.json(writings);
     });
   })
-  .post(isAuthenticated(), function(req, res){
+  .post(isAuthenticated, function(req, res){
     work = new Writing(req.body);
     work.save(function(err){
       if(err){
