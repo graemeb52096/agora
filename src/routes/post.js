@@ -10,7 +10,7 @@ module.exports = function(router, isAuthenticated){
 			res.json(post);
 		});
 	})
-	.post(isAuthenticated, function(req, res){
+	.post(isAuthenticated(), function(req, res){
 		var media = req.files;
 		if (media.type == 'image/jpg'){
 			//hanlde image upload
@@ -40,7 +40,7 @@ module.exports = function(router, isAuthenticated){
 			res.json(post);
 		});
 	})
-	.put(isAuthenticated, function(req, res){
+	.put(isAuthenticated(), function(req, res){
 		Post.findByid(req.params.post_id, function(err, post){
 			if (err){
 				res.json(err);
@@ -54,7 +54,7 @@ module.exports = function(router, isAuthenticated){
 			});
 		});
 	})
-	.delete(isAuthenticated, function(req, res){
+	.delete(isAuthenticated(), function(req, res){
 		Post.remove({ _id: req.params.post_id }, function(err, post){
 			if (err){
 				res.json(err);
