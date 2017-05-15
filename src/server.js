@@ -8,10 +8,6 @@ var LocalStrategy = require('passport-local').Strategy;
 var app = express();
 var router = express.Router();
 
-var User = require('./db/user');
-var Post = require('./db/post');
-var Writing = require('./db/writing');
-
 mongoose.connect(config.MONGODB);
 
 mongoose.connection.on('connected', function() {
@@ -29,6 +25,7 @@ router.use(function(req, res, next){
     next();
 });
 
+/** Set up local strategy **/
 passport.use(new LocalStrategy(
   function(username, password, done) {
     User.findOne({ username: username }, function (err, user) {
@@ -56,7 +53,6 @@ passport.deserializeUser(function(user, done) {
 });
 
 /** MIDDLEWARE **/
-
 function isAuthenticated() {
   return function(req, res, next) {
     if (req.user) {
@@ -66,18 +62,12 @@ function isAuthenticated() {
     };
   };
 };
-
+//Checks if user is owner or resource
 function isOwner() {
   return function(req, res, item, next){
-
+    //pass
   }
 }
-
-/** URL PARAM HANDLERS **/
-app.param('post_id', function(req, res, next, post_id) {
-    req.post_id = post_id;
-    next();
-});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -88,9 +78,8 @@ app.use(passport.session());
 require('./routes/user')(router, isAuthenticated);
 require('./routes/post')(router, isAuthenticated);
 require('./routes/writing')(router, isAuthenticated);
-
+/** Add routes from router to app *//
 app.use('/api', router);
-
 app.listen(config.PORT, function () {
     console.log('Agora listening on port 3000!');
 });
