@@ -54,7 +54,7 @@ passport.deserializeUser(function(user, done) {
 });
 
 /** MIDDLEWARE **/
-function isAuthenticated(){
+function isAuthenticated(req, res, next){
   return function(req, res, next) {
     if (req.user) {
       next();
@@ -67,13 +67,13 @@ function isAuthenticated(){
 //Checks if user is owner of resource
 function isOwner(){
   return function(req, res, item, next){
-    //pass
+    console.log(req.user);
+    next();
   };
 };
 
 var multiparty = require('multiparty');
 function parseForm(req, res, next){
-  console.log('Parsing request');
   var form = new multiparty.Form();
   form.parse(req, function(err, fields, files){
     req.body = (fields);
@@ -92,6 +92,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /** ENDPOINTS **/
+router.route('/login').post(isAuthenticated(), function(req, res){
+  res.sendStatus(200);
+});
+router.route('/logout').get(function(req, res){
+  req.logout;
+  res.sendStatus(200);
+});
+
 require('./routes/user')(router, isAuthenticated);
 require('./routes/post')(router, isAuthenticated);
 require('./routes/writing')(router, isAuthenticated);

@@ -9,7 +9,9 @@ var userSchema = new Schema({
 		firstName: String,
 		lastName: String,
 		dob: Date,
-		location: String
+		country: String,
+		state: String,
+		city: String
 	},
 	dateCreated: { type: Date, default: Date.now },
 });

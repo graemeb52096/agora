@@ -9,9 +9,8 @@ module.exports = function(req, res, media, next){
 	};
 	var maxImageSize = 6000000;
 	var maxAudioSize = 6000000;
-	var maxVideoSize = 6000000;
+	var maxVideoSize = 24000000;
 	var file = new Resource();
-	console.log(media);
 	file.size = media.size;
 	var contentType = media.headers['content-type'];
 	if (contentType == 'image/jpeg'){

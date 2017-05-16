@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var postSchema = new Schema({
-  dateCreated: { type: Date, default: Date.now },
+  dateCreated: { type:Date, default:Date.now },
   user: String,
   mediaType: String,
   mediaUrl: String,
@@ -11,12 +11,13 @@ var postSchema = new Schema({
   comments: [{
     user: String,
     body: String,
-    date: { type: Date, default: Date.now }
+    date: { type:Date, default:Date.now }
   }],
   tags: [ String ],
   meta: {
     shares: Number,
-    upVotes: Number
+    upVotes: Number,
+    forSale: { type:Boolean, default:false }
   }
 });
 
