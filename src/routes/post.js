@@ -16,9 +16,9 @@ module.exports = function(router, isAuthenticated){
 			res.json({ 'message':'no file provided' });
 		};
 		var media = req.files.media[0];
-		var resourcePath = Upload(req, res, media, function(filePath){
+		Upload(req, res, media, function(resourceUrl){
 			var post = new Post(req.body);
-			post.mediaUrl = resourcePath;
+			post.mediaUrl = resourceUrl;
 			post.save(function(err){
 				if (err){
 					res.json(err);

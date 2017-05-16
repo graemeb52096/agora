@@ -11,8 +11,9 @@ module.exports = function(req, res, media, next){
 	var maxAudioSize = 6000000;
 	var maxVideoSize = 6000000;
 	var file = new Resource();
+	console.log(media);
 	file.size = media.size;
-	contentType = media.headers['content-type'];
+	var contentType = media.headers['content-type'];
 	if (contentType == 'image/jpeg'){
 		if (file.size > maxImageSize){
 			res.sendStatus(413);
@@ -54,7 +55,8 @@ module.exports = function(req, res, media, next){
 					};
 				});
 				console.log('returning file path');
-				next(filePath);
+				var resourceUrl = '/resource/' + file.kind + '/' + resource.id;
+				next(resourceUrl);
 			});
 		};
 	});

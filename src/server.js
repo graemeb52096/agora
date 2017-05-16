@@ -95,6 +95,7 @@ app.use(passport.session());
 require('./routes/user')(router, isAuthenticated);
 require('./routes/post')(router, isAuthenticated);
 require('./routes/writing')(router, isAuthenticated);
+require('./routes/resource')(router);
 
 /** Add routes from router to app **/
 app.use('/api', router);
