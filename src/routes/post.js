@@ -12,15 +12,19 @@ module.exports = function(router, isAuthenticated){
 		});
 	})
 	.post(isAuthenticated(), function(req, res){
-		var media = req.files;
-		var resourcePath = Upload(req, res, media);
-		var post = new Post(req.body);
-		post.mediaUrl = resourcePath;
-		post.save(function(err){
-			if (err){
-				res.json(err);
-			};
-			res.json({ status:'success', message:'post was created' });
+		if (!req.files){
+			res.json({ 'message':'no file provided' });
+		};
+		var media = req.files.media[0];
+		var resourcePath = Upload(req, res, media, function(filePath){
+			var post = new Post(req.body);
+			post.mediaUrl = resourcePath;
+			post.save(function(err){
+				if (err){
+					res.json(err);
+				};
+				res.json({ status:'success', message:'post was created' });
+			});
 		});
 	});
 

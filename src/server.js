@@ -28,8 +28,7 @@ router.use(function(req, res, next){
 });
 
 /** Set up local strategy **/
-passport.use(new LocalStrategy(
-  function(username, password, done) {
+passport.use(new LocalStrategy(function(username, password, done) {
     User.findOne({ username: username }, function (err, user) {
       if (err) {
         return done(err);
@@ -42,7 +41,7 @@ passport.use(new LocalStrategy(
       };
       return done(null, user);
     });
-  };
+  }
 ));
 
 passport.serializeUser(function(user, done) {
@@ -55,25 +54,40 @@ passport.deserializeUser(function(user, done) {
 });
 
 /** MIDDLEWARE **/
-function isAuthenticated() {
+function isAuthenticated(){
   return function(req, res, next) {
     if (req.user) {
       next();
     } else {
-      res.json({ message:'not logged in' });
+      next();
+      //res.json({ message:'not logged in' });
     };
   };
 };
 //Checks if user is owner of resource
-function isOwner() {
+function isOwner(){
   return function(req, res, item, next){
     //pass
   };
 };
 
+var multiparty = require('multiparty');
+function parseForm(req, res, next){
+  console.log('Parsing request');
+  var form = new multiparty.Form();
+  form.parse(req, function(err, fields, files){
+    req.body = (fields);
+    req.files = (files);
+    next();
+  });
+};
+
 /** Add resources to app **/
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(parseForm);
+//app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.json());
+//app.use(express.json());
+//app.use(express.urlencoded());
 app.use(passport.initialize());
 app.use(passport.session());
 

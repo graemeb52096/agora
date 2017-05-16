@@ -17,7 +17,8 @@ module.exports = function(router){
 					res.sendStatus(400);
 					return;
 				};
-				res.sendFile(filePath);
+				res.sendFile(path.join(__dirname, filePath));
+				return;
 			};
 		});
 	});
