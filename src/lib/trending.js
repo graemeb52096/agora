@@ -1,24 +1,34 @@
-var Trending = function(req, res, next){};
-var TrendingImages = function(req, res, next){};
-var TrendingVideos = function(req, res, next){};
-var TrendingAudio = function(req, res, next){};
-var TrendingSubs = function(req, res, next){};
+var Trending = function(req, res, next){
+	//TODO Create trending algo(for all posts)
+};
+var TrendingImages = function(req, res, next){
+	//TODO Create trending algo for images
+};
+var TrendingVideos = function(req, res, next){
+	//TODO Create trending algo for videos
+};
+var TrendingAudio = function(req, res, next){
+	//TODO Create trending algo for audio
+};
+var TrendingSubs = function(req, res, next){
+	//TODO Create trending algo for a given 'tag'(stored in req.params.category)
+};
 
 module.exports = function(req, res, next){
-	if (req.params.category == 'img'){
-		trends.trendingImages(req, res, function(posts){
+	if (!req.params.category){
+		Trending(req, res, function(posts){
 			next(posts);
-		});
-	} else if(req.params.category == 'aud'){
-		trends.trendingAudio(req, res, function(posts){
+		})
+	} else if(req.params.category == 'img'){
+		TrendingAudio(req, res, function(posts){
 			next(posts);
 		});
 	} else if(req.params.category == 'vid'){
-		trends.trendingVideos(req, res, function(posts){
+		TrendingVideos(req, res, function(posts){
 			next(posts);
 		});
 	} else {
-		trends.trendingSubs(req, res, function(posts){
+		TrendingSubs(req, res, function(posts){
 			next(posts);
 		});
 	};

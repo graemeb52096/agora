@@ -1,3 +1,3 @@
 module.exports = function(req, res, next){
-	//get feed
+	//TODO get user specific feed
 };
