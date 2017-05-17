@@ -52,7 +52,7 @@ module.exports = function(router, isAuthenticated){
 		});
 	})
 	.delete(isAuthenticated(), function(req, res){
-		Post.remove({ _id: req.params.post_id }, function(err, post){
+		Post.remove({ _id:req.params.post_id }, function(err, post){
 			if (err){
 				res.json(err);
 			};
