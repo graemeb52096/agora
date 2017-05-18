@@ -104,6 +104,7 @@ require('./routes/user')(router, isAuthenticated);
 require('./routes/post')(router, isAuthenticated);
 require('./routes/writing')(router, isAuthenticated);
 require('./routes/resource')(router);
+require('./routes/comment')(router, isAuthenticated);
 
 /** Add routes from router to app **/
 app.use('/api', router);
