@@ -5,7 +5,10 @@ module.exports = function(router, isAuthenticated){
 	.get(function(req, res){
 		Writing.find(function(err, writings){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
 			res.json(writings);
 		});
@@ -14,9 +17,13 @@ module.exports = function(router, isAuthenticated){
 		work = new Writing(req.body);
 		work.save(function(err){
 			if(err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
-			res.json({ status:'success', message:'work was added' });
+			res.sendStatus(200);
+			return;
 		});
 	});
 
@@ -24,7 +31,10 @@ module.exports = function(router, isAuthenticated){
 	.get(function(req, res){
 		Writing.findById(req.params.writing_id, function(err, writing){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
 			res.json(writing);
 		});
@@ -34,18 +44,29 @@ module.exports = function(router, isAuthenticated){
 			writing = req.body;
 			writing.save(function(err){
 				if (err){
-					res.json(err);
+					//TODO use a logger to log error
+					console.log(err);
+					res.sendStatus(500);
+					return;
 				};
-				res.json({ message:'Writing was updated' });
+				if (!writing){
+					res.sendStatus(404);
+				}
+				res.sendStatus(200);
+				return;
 			});
 		});
 	})
 	.delete(isAuthenticated(), function(req, res){
 		Writing.remove({ _id:req.params.writing_id }, function(err, writing){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
-			res.json({ message:'Writing was deleted' });
+			res.sendStatus(200);
+			return;
 		});
 	});
 };

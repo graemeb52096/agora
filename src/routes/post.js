@@ -4,11 +4,14 @@ var Upload = require('../lib/file-upload');
 module.exports = function(router, isAuthenticated){
 	router.route('/post')
 	.get(function(req, res){
-		Post.find(function(err, post){
+		Post.find(function(err, posts){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
-			res.json(post);
+			res.json(posts);
 		});
 	})
 	.post(isAuthenticated(), function(req, res){
@@ -21,9 +24,13 @@ module.exports = function(router, isAuthenticated){
 			post.mediaUrl = resourceUrl;
 			post.save(function(err){
 				if (err){
-					res.json(err);
+					//TODO use a logger to log error
+					console.log(err);
+					res.sendStatus(500);
+					return;
 				};
-				res.json({ status:'success', message:'post was created' });
+				res.sendStatus(200);
+				return
 			});
 		});
 	});
@@ -32,7 +39,10 @@ module.exports = function(router, isAuthenticated){
 	.get(function(req, res){
 		Post.findById(req.params.post_id, function(err, post){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
 			res.json(post);
 		});
@@ -45,18 +55,26 @@ module.exports = function(router, isAuthenticated){
 			post = req.body;
 			post.save(function(err){
 				if (err){
-					res.json(err);
+					//TODO use a logger to log error
+					console.log(err);
+					res.sendStatus(500);
+					return;
 				};
-				res.json({ status:'success', message:'post was updated' });
+				res.sendStatus(200);
+				return;
 			});
 		});
 	})
 	.delete(isAuthenticated(), function(req, res){
 		Post.remove({ _id:req.params.post_id }, function(err, post){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
-			res.json({ status:'success', message:'post was deleted' });
+			res.sendStatus(200);
+			return;
 		});
 	});
 };

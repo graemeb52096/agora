@@ -60,7 +60,7 @@ function isAuthenticated(req, res, next){
       next();
     } else {
       next();
-      //res.json({ message:'not logged in' });
+      //res.sendStatus(401);
     };
   };
 };
@@ -83,7 +83,7 @@ function parseForm(req, res, next){
 };
 
 /** Add resources to app **/
-app.use(parseForm);
+app.use(parseForm());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 //app.use(express.json());

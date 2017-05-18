@@ -5,7 +5,10 @@ module.exports = function(router, isAuthenticated){
 	.get(function(req, res){
 		User.find(function(err, users){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
 			res.json(users);
 		});
@@ -14,9 +17,13 @@ module.exports = function(router, isAuthenticated){
 		var user = new User(req.body);
 		user.save(function(err){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
-			res.json({ status:'success', message:'user was created' });
+			res.sendStatus(200);
+			return;
 		});
 	});
 
@@ -24,9 +31,13 @@ module.exports = function(router, isAuthenticated){
 	.get(function(req, res){
 		User.findOne({'_id': req.uid}, function(err, usr){
 			if(err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			} else if(!usr){
 				res.sendStatus(404);
+				return;
 			} else {
 				res.json(usr);
 			};
@@ -35,9 +46,13 @@ module.exports = function(router, isAuthenticated){
 	.put(isAuthenticated(), function(req, res){
 		User.findByIdAndUpdate(req.uid, req.body, function(err, usr){
 			if(err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			} else if(!usr){
 				res.sendStatus(404);
+				return;
 			} else{
 				res.json(usr);
 			};
@@ -46,11 +61,16 @@ module.exports = function(router, isAuthenticated){
 	.delete(isAuthenticated(), function(req, res){
 		User.findByIdAndRemove(req.uid, function(err, usr){
 			if(err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			} else if(!usr){
 				res.sendStatus(404);
+				return;
 			} else{
 				res.sendStatus(200);
+				return;
 			};
 		});
 	});

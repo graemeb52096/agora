@@ -6,15 +6,21 @@ module.exports = function(router, isAuthenticated){
 		var post_id = req.body.post_id;
 		Post.findById(post_id, function(err, post){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
 			post.comments.push({ user:req.body.commentor,
 				body:req.body.comment_body });
 			post.save(function(err){
 				if (err){
-					res.json(err);
+					//TODO use a logger to log errror
+					console.log(err);
+					res.sendStatus(500);
+					return;
 				};
-				res.json({ message:"Comment has been added" });
+				res.sendStatus(200);
 			});
 		});
 	});
@@ -26,9 +32,12 @@ module.exports = function(router, isAuthenticated){
 		comment.body = req.body.comment_body;
 		comment.save(function(err){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
-			res.json({ message:"Comment was updated" });
+			res.sendStatus(200);
 		});
 	})
 	.delete(isAuthenticated(), function(req, res){
@@ -36,9 +45,12 @@ module.exports = function(router, isAuthenticated){
 		//TODO add is owner MIDDLEWARE
 		Post.comment.remove({ _id:req.params.comment_id }, function(err){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			};
-			res.json({ message:"comment deleted" });
+			res.sendStatus(200);
 		});
 	});
 };

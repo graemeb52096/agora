@@ -6,7 +6,10 @@ module.exports = function(router){
 	.get(function(req, res){
 		Resource.findById(req.params.id, function(err, resource){
 			if (err){
-				res.json(err);
+				//TODO use a logger to log error
+				console.log(err);
+				res.sendStatus(500);
+				return;
 			} else {
 				if (req.params.kind == 'img'){
 					var filePath = '../uploads/images/';
@@ -26,7 +29,10 @@ module.exports = function(router){
 				};
 				res.sendFile(path.join(__dirname, filePath), function(err){
 					if(err){
-						res.json(err);
+						//TODO use a logger to log error
+						console.log(err);
+						res.sendStatus(500);
+						return;
 					};
 				});
 			};
