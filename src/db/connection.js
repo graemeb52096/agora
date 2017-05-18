@@ -6,7 +6,7 @@ var connectionSchema = new Schema({
 	connection: String,
 	meta: {
 		verified: { type:Boolean, default:false },
-		date: { type:Date, default:Date.now }
+		dateCreated: { type:Date, default:Date.now }
 	}
 });
 

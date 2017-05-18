@@ -11,9 +11,9 @@ var userSchema = new Schema({
 		dob: Date,
 		country: String,
 		state: String,
-		city: String
-	},
-	dateCreated: { type: Date, default: Date.now },
+		city: String,
+		dateCreated: { type: Date, default: Date.now }
+	}
 });
 
 userSchema.methods.validPassword = function(pass){
