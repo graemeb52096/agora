@@ -83,7 +83,7 @@ function parseForm(req, res, next){
 };
 
 /** Add resources to app **/
-app.use(parseForm());
+app.use(parseForm);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 //app.use(express.json());
@@ -93,6 +93,7 @@ app.use(passport.session());
 
 /** ENDPOINTS **/
 router.route('/login').post(isAuthenticated(), function(req, res){
+  console.log('login corrrect')
   res.sendStatus(200);
 });
 router.route('/logout').get(function(req, res){
