@@ -8,7 +8,7 @@ module.exports = function(req, res, media, next){
 		return;
 	};
 	var maxImageSize = 6000000;
-	var maxAudioSize = 6000000;
+	var maxAudioSize = 12000000;
 	var maxVideoSize = 24000000;
 	var file = new Resource();
 	file.size = media.size;
@@ -40,17 +40,25 @@ module.exports = function(req, res, media, next){
 	};
 	fs.readFile(media.path, function(err, data){
 		if (err){
-			res.json(err);
+			//TODO use a logger to log error
+			console.log(err);
+			res.sendStatus(500);
 			return;
 		} else {
 			file.save(function(err, resource){
 				if (err){
-					res.json(err);
+					//TODO use a logger to log error
+					console.log(err);
+					res.sendStatus(500);
+					return;
 				};
 				filePath = filePath + (resource.id);
 				fs.writeFile(path.join(__dirname, filePath+file.kind), data, function(err){
 					if (err){
-						res.json(err);
+						//TODO use a logger to log error
+						console.log(err);
+						res.sendStatus(500);
+						return;
 					};
 				});
 				console.log('returning file path');
