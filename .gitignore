@@ -2,3 +2,4 @@ node_modules/*
 src/uploads/*
 .DS_Store
 .idea/*
+src/logs/*

@@ -8,16 +8,20 @@ var LocalStrategy = require('passport-local').Strategy;
 var app = express();
 var router = express.Router();
 
+var Logger = require('./lib/logger');
+var logger = new Logger('./logs/');
+
 /** Mongoose configs/initializer **/
 mongoose.connect(config.MONGODB);
 mongoose.connection.on('connected', function() {
-    console.log('Mongoose connected to ' + config.MONGODB);
+  logger.log('testing');
+  console.log('Mongoose connected to ' + config.MONGODB);
 });
 mongoose.connection.on('error', function(error) {
-    console.log('Mongoose connection error: ' + error);
+  console.log('Mongoose connection error: ' + error);
 });
 mongoose.connection.on('disconnected', function() {
-    console.log('Mongoose disconnected.');
+  console.log('Mongoose disconnected.');
 });
 
 /** This function will capture all requests
@@ -106,6 +110,7 @@ require('./routes/post')(router, isAuthenticated);
 require('./routes/writing')(router, isAuthenticated);
 require('./routes/resource')(router);
 require('./routes/comment')(router, isAuthenticated);
+require('./routes/feed')(router, isAuthenticated);
 
 /** Add routes from router to app **/
 app.use('/api', router);

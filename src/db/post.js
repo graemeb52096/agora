@@ -1,5 +1,7 @@
+var date = require('date-and-time');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Like = require('../db/like').likeSchema;
 
 var postSchema = new Schema({
   user: String,
@@ -15,7 +17,15 @@ var postSchema = new Schema({
   tags: [ String ],
   meta: {
     shares: Number,
-    upVotes: Number,
+    likes: [
+      {
+        user: { type:String, required:true },
+      	post: { type:Number, required:true },
+      	meta: {
+      		dateCreated: { type:Date, default:Date.now },
+      	}
+      }
+    ],
     forSale: { type:Boolean, default:false },
     dateCreated: { type:Date, default:Date.now }
   }

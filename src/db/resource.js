@@ -5,7 +5,7 @@ var resourceSchema = new Schema({
 	kind: { type:String, required:true },
 	meta: {
 		dateCreated: { type:Date, default:Date.now },
-		size: { type:Number, required:true },
+		size: { type:Number, required:true }
 	}
 });
 
