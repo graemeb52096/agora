@@ -6,8 +6,7 @@ module.exports = function(router, isAuthenticated){
 		var post_id = req.body.post_id;
 		Post.findById(post_id, function(err, post){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};
@@ -15,8 +14,7 @@ module.exports = function(router, isAuthenticated){
 				body:req.body.comment_body });
 			post.save(function(err){
 				if (err){
-					//TODO use a logger to log errror
-					console.log(err);
+					logger.error(err);
 					res.sendStatus(500);
 					return;
 				};
@@ -32,8 +30,7 @@ module.exports = function(router, isAuthenticated){
 		comment.body = req.body.comment_body;
 		comment.save(function(err){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};
@@ -45,8 +42,7 @@ module.exports = function(router, isAuthenticated){
 		//TODO add is owner MIDDLEWARE
 		Post.comment.remove({ _id:req.params.comment_id }, function(err){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};

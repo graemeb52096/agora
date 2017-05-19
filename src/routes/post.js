@@ -1,13 +1,12 @@
 var Post = require('../db/post');
 var Upload = require('../lib/file-upload');
 
-module.exports = function(router, isAuthenticated){
+module.exports = function(router, isAuthenticated, logger){
 	router.route('/post')
 	.get(function(req, res){
 		Post.find(function(err, posts){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};
@@ -24,8 +23,7 @@ module.exports = function(router, isAuthenticated){
 			post.mediaUrl = resourceUrl;
 			post.save(function(err){
 				if (err){
-					//TODO use a logger to log error
-					console.log(err);
+					logger.error(err);
 					res.sendStatus(500);
 					return;
 				};
@@ -39,8 +37,7 @@ module.exports = function(router, isAuthenticated){
 	.get(function(req, res){
 		Post.findById(req.params.post_id, function(err, post){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};
@@ -55,8 +52,7 @@ module.exports = function(router, isAuthenticated){
 			post = req.body;
 			post.save(function(err){
 				if (err){
-					//TODO use a logger to log error
-					console.log(err);
+					logger.error(err);
 					res.sendStatus(500);
 					return;
 				};
@@ -68,8 +64,7 @@ module.exports = function(router, isAuthenticated){
 	.delete(isAuthenticated(), function(req, res){
 		Post.remove({ _id:req.params.post_id }, function(err, post){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};

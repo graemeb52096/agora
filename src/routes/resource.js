@@ -6,8 +6,7 @@ module.exports = function(router){
 	.get(function(req, res){
 		Resource.findById(req.params.id, function(err, resource){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			} else {
@@ -29,8 +28,7 @@ module.exports = function(router){
 				};
 				res.sendFile(path.join(__dirname, filePath), function(err){
 					if(err){
-						//TODO use a logger to log error
-						console.log(err);
+						logger.error(err);
 						res.sendStatus(500);
 						return;
 					};

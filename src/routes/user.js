@@ -1,12 +1,11 @@
 var User = require('../db/user');
 
-module.exports = function(router, isAuthenticated){
+module.exports = function(router, isAuthenticated, logger){
 	router.route('/user')
 	.get(function(req, res){
 		User.find(function(err, users){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};
@@ -17,8 +16,7 @@ module.exports = function(router, isAuthenticated){
 		var user = new User(req.body);
 		user.save(function(err){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};
@@ -31,8 +29,7 @@ module.exports = function(router, isAuthenticated){
 	.get(function(req, res){
 		User.findOne({'_id': req.uid}, function(err, usr){
 			if(err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			} else if(!usr){
@@ -46,8 +43,7 @@ module.exports = function(router, isAuthenticated){
 	.put(isAuthenticated(), function(req, res){
 		User.findByIdAndUpdate(req.uid, req.body, function(err, usr){
 			if(err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			} else if(!usr){
@@ -61,8 +57,7 @@ module.exports = function(router, isAuthenticated){
 	.delete(isAuthenticated(), function(req, res){
 		User.findByIdAndRemove(req.uid, function(err, usr){
 			if(err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			} else if(!usr){

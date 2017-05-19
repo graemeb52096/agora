@@ -5,8 +5,7 @@ module.exports = function(router, isAuthenticated){
 	.get(function(req, res){
 		Writing.find(function(err, writings){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};
@@ -17,8 +16,7 @@ module.exports = function(router, isAuthenticated){
 		work = new Writing(req.body);
 		work.save(function(err){
 			if(err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};
@@ -31,8 +29,7 @@ module.exports = function(router, isAuthenticated){
 	.get(function(req, res){
 		Writing.findById(req.params.writing_id, function(err, writing){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};
@@ -44,8 +41,7 @@ module.exports = function(router, isAuthenticated){
 			writing = req.body;
 			writing.save(function(err){
 				if (err){
-					//TODO use a logger to log error
-					console.log(err);
+					logger.error(err);
 					res.sendStatus(500);
 					return;
 				};
@@ -60,8 +56,7 @@ module.exports = function(router, isAuthenticated){
 	.delete(isAuthenticated(), function(req, res){
 		Writing.remove({ _id:req.params.writing_id }, function(err, writing){
 			if (err){
-				//TODO use a logger to log error
-				console.log(err);
+				logger.error(err);
 				res.sendStatus(500);
 				return;
 			};

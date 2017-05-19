@@ -9,12 +9,11 @@ var app = express();
 var router = express.Router();
 
 var Logger = require('./lib/logger');
-var logger = new Logger('./logs/');
+var logger = new Logger('./logs/', debug=true);
 
 /** Mongoose configs/initializer **/
 mongoose.connect(config.MONGODB);
 mongoose.connection.on('connected', function() {
-  logger.log('testing');
   console.log('Mongoose connected to ' + config.MONGODB);
 });
 mongoose.connection.on('error', function(error) {
@@ -35,6 +34,7 @@ router.use(function(req, res, next){
 passport.use(new LocalStrategy(function(username, password, done) {
     User.findOne({ username: username }, function (err, user) {
       if (err) {
+        logger.error(err);
         return done(err);
       };
       if (!user) {
@@ -105,12 +105,12 @@ router.route('/logout').get(function(req, res){
   res.sendStatus(200);
 });
 
-require('./routes/user')(router, isAuthenticated);
-require('./routes/post')(router, isAuthenticated);
-require('./routes/writing')(router, isAuthenticated);
-require('./routes/resource')(router);
-require('./routes/comment')(router, isAuthenticated);
-require('./routes/feed')(router, isAuthenticated);
+require('./routes/user')(router, isAuthenticated, logger);
+require('./routes/post')(router, isAuthenticated, logger);
+require('./routes/writing')(router, isAuthenticated, logger);
+require('./routes/resource')(router, logger);
+require('./routes/comment')(router, isAuthenticated, logger);
+require('./routes/feed')(router, isAuthenticated, logger);
 
 /** Add routes from router to app **/
 app.use('/api', router);
