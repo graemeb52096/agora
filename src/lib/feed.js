@@ -1,7 +1,7 @@
 var getFriends = require('./get-friends');
 var Post = require('../db/post');
 
-module.exports = function(req, res, page, next){
+module.exports = function(req, res, page, logger, next){
 	//TODO get user specific feed
 	getFriends(req, res, function(friends){
 		//TODO get 10 most recent posts from each friend for page 0
@@ -12,8 +12,7 @@ module.exports = function(req, res, page, next){
 		for (var i=0; i < friends.length; i++){
 			Post.find({ user:friends[i] }, null, { sort:{ 'meta.dateCreated':'desc' }, skip:skipped, limit:10 }, function(err, posts){
 				if (err){
-					//TODO use logger to log error
-					console.log(err);
+					logger.error(err);
 					res.sendStatus(500);
 					return;
 				};

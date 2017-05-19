@@ -25,9 +25,9 @@ mongoose.connection.on('disconnected', function() {
 
 /** This function will capture all requests
 and could be useful for analytics **/
-router.use(function(req, res, next){
-    console.log('Request was made.');
-    next();
+router.use(function(req, res, next) {
+  logger.info(req.method + ' request was made at: ' + req.originalUrl);
+  next();
 });
 
 /** Set up local strategy **/
