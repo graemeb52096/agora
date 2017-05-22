@@ -2,33 +2,34 @@ var Resource = require('../db/resource');
 var fs = require('fs');
 var path = require('path');
 
+var MAXIMAGESIZE = 6000000;
+var MAXAUDIOSIZE = 12000000;
+var MAXVIDEOSIZE = 24000000;
+
 module.exports = function(req, res, media, next){
 	if (!media){
 		res.sendStatus(400);
 		return;
 	};
-	var maxImageSize = 6000000;
-	var maxAudioSize = 12000000;
-	var maxVideoSize = 24000000;
 	var file = new Resource();
 	file.size = media.size;
 	var contentType = media.headers['content-type'];
 	if (contentType == 'image/jpeg'){
-		if (file.size > maxImageSize){
+		if (file.size > MAXIMAGESIZE){
 			res.sendStatus(413);
 			return;
 		};
 		var filePath = '../uploads/images/';
 		file.kind = 'img';
 	} else if (contentType == 'audio/mp3'){
-		if (file.size > maxAudioSize){
+		if (file.size > MAXAUDIOSIZE){
 			res.sendStatus(413);
 			return;
 		};
 		var filePath = '../uploads/audio/';
 		file.kind = 'aud';
 	} else if (contentType == 'video/mp4'){
-		if (file.size > maxVideoSize){
+		if (file.size > MAXVIDEOSIZE){
 			res.sendStatus(413);
 			return;
 		};
@@ -61,7 +62,6 @@ module.exports = function(req, res, media, next){
 						return;
 					};
 				});
-				console.log('returning file path');
 				var resourceUrl = '/resource/' + file.kind + '/' + resource.id;
 				next(resourceUrl);
 			});

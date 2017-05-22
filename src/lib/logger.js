@@ -67,7 +67,6 @@ Logger.prototype.entry = function(message, file, level=2){
 	fs.appendFile(path.join(this.dir, file+'.log'), entry, function(err){
 		if (err){
 			console.log(err);
-			next(false);
 		};
 		if (this.debug){
 			console.log(entry);

@@ -2,11 +2,10 @@ var Date = require('date-and-time');
 
 var Trending = function(req, res, next){
 	//TODO Create trending algo(for all posts)
-	//get posts from current month
-	var now = new Date();
-	var month = now.month;
-	var year = now.year;
-	var startRange = ;
+	//for every post
+		//Likes/Hour l(h) = Likes as a function of time
+		//Populartiry p(h) = l'(h) = polularity as a function of time
+		//Trend t(h) = p'(h) = l"(h) = trend as a function of time
 };
 var TrendingImages = function(req, res, next){
 	//TODO Create trending algo for images

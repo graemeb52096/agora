@@ -69,11 +69,12 @@ function isAuthenticated(req, res, next){
   };
 };
 //Checks if user is owner of resource
-function isOwner(){
-  return function(req, res, item, next){
-    console.log(req.user);
-    next();
+function isOwner(item, username){
+  if (item.user == username){
+    return true
   };
+  return false;
+  next();
 };
 
 var multiparty = require('multiparty');

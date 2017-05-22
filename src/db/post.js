@@ -1,7 +1,6 @@
 var date = require('date-and-time');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var Like = require('../db/like').likeSchema;
 
 var postSchema = new Schema({
   user: String,
@@ -20,16 +19,21 @@ var postSchema = new Schema({
     likes: [
       {
         user: { type:String, required:true },
-      	post: { type:Number, required:true },
       	meta: {
       		dateCreated: { type:Date, default:Date.now },
-      	}
+      	},
+        trendValue: Number
       }
     ],
     forSale: { type:Boolean, default:false },
     dateCreated: { type:Date, default:Date.now }
   }
 });
+
+postSchema.methods.calculateTrendValue = function(){
+  //plot x, y graph using date, likes
+  var now = new Date();
+};
 
 var Post = mongoose.model('Post', postSchema);
 
