@@ -21,8 +21,7 @@ var postSchema = new Schema({
         user: { type:String, required:true },
       	meta: {
       		dateCreated: { type:Date, default:Date.now },
-      	},
-        trendValue: Number
+      	}
       }
     ],
     forSale: { type:Boolean, default:false },
